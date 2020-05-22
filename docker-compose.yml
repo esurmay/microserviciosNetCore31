@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  lil.customers:
+    image: ${DOCKER_REGISTRY-}lilcustomers
+    build:
+      context: .
+      dockerfile: Lil.Customers/Dockerfile
+
+  lil.products:
+    image: ${DOCKER_REGISTRY-}lilproducts
+    build:
+      context: .
+      dockerfile: Lil.Products/Dockerfile
+
+
+  lil.sales:
+    image: ${DOCKER_REGISTRY-}lilsales
+    build:
+      context: .
+      dockerfile: Lil.Sales/Dockerfile
+
+
+  lil.search:
+    image: ${DOCKER_REGISTRY-}lilsearch
+    build:
+      context: .
+      dockerfile: Lil.Search/Dockerfile
+
