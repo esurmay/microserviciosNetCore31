@@ -23,10 +23,13 @@ namespace Lil.Search.Controllers
             this.salesService = salesService;
         }
 
+
+
+        #region Customers
         [HttpGet("customers")]
-        public async Task<IActionResult> SearchAsync() 
+        public async Task<IActionResult> SearchAsync()
         {
-            
+
             try
             {
                 var customer = await customersService.GetAllAsync();
@@ -83,5 +86,108 @@ namespace Lil.Search.Controllers
                 throw;
             }
         }
+
+        #endregion   
+
+        #region Products
+        [HttpGet("products")]
+        public async Task<IActionResult> SearchProductsAsync()
+        {
+
+            try
+            {
+                var products = await productsService.GetAllAsync();
+                var sales = await salesService.GetAllAsync();
+
+                var result = new
+                {
+                    Products = products,
+                    Sales = sales
+                };
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("products/{id}")]
+        public async Task<IActionResult> SearchProductsByIdAsync(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var product = await productsService.GetProductAsync(id);
+                
+                var result = new
+                {
+                    Product = product,
+                };                
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Sales
+        [HttpGet("sales")]
+        public async Task<IActionResult> SearchSalessAsync()
+        {
+
+            try
+            {
+                var sales = await salesService.GetAllAsync();
+                var result = new
+                {
+                    Sales = sales
+                };
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet("sales/{CustomerId}")]
+        public async Task<IActionResult> SearchSalesByIdAsync(string CustomerId)
+        {
+            if (string.IsNullOrWhiteSpace(CustomerId))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var sales = await salesService.GetAsync(CustomerId);
+
+                var result = new
+                {
+                    Sales = sales,
+                };
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        #endregion
+
+
     }
 }
