@@ -1,5 +1,5 @@
 version: '3.4'
-
+un cambio de prueba
 services:
   lil.customers:
     image: ${DOCKER_REGISTRY-}lilcustomers
